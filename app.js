@@ -10,13 +10,19 @@ document.getElementById("btn-search").addEventListener("click", () => {
 });
 
 const displayPhone = (phones) => {
-  /* console.log(phones.data[0].brand) */
+ 
+ 
 
   const resultField = document.getElementById("search-result");
+  resultField.textContent = "";
+  const singlePhone = document.getElementById('phone-info');
+  singlePhone.textContent = ""
+  document.getElementById('text_single_phone_details').innerText= "";
+  document.getElementById('text_show_result').innerText = 'All Mobile Phone';
+  var limit_Phones = phones.slice(0,20);
 
-  phones.forEach((phone) => {
-   // console.log(phone);
-
+  limit_Phones?.forEach((phone) => {
+    
     const div = document.createElement("div");
     div.classList.add("col");
     div.innerHTML = `
@@ -30,6 +36,7 @@ const displayPhone = (phones) => {
               <button onclick="moreDetails('${phone.slug}')" class="btn btn-primary rounded-3">More Info</button>
             </div>
           </div>`;
+          
 
     resultField.appendChild(div);
   });
@@ -43,10 +50,10 @@ const moreDetails = details =>{
 }
 
 const displayPhoneDetails = phoneDetails =>{
-  console.log(phoneDetails.image);
   const singlePhone = document.getElementById('phone-info');
+  document.getElementById('text_single_phone_details').innerText = 'Single Mobile Phone Details';
+  singlePhone.textContent = "";
   const div = document.createElement("div");
-  const others = phoneDetails.others;
     div.classList.add("col");
     div.innerHTML =  `
     <div class="card h-100 border border-success border-3 rounded-3">
@@ -65,7 +72,8 @@ const displayPhoneDetails = phoneDetails =>{
           <h6 class="card-text">
             Sensor: ${phoneDetails.mainFeatures.sensors ? phoneDetails.mainFeatures.sensors : "Not Available"}
           </h6>
-          <h6> Other: <span class="fs-5"></span></h6>
+          <h6> Other: <span class="fs-5">${phoneDetails.others.WLAN}</span></h6>
+          <h5 class="card-text">WLAN: ${phoneDetails.others.WLAN}</h5>
         </div>
       </div>`;
     singlePhone.appendChild(div);
