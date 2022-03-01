@@ -1,3 +1,4 @@
+/* fetch data from api */
 document.getElementById("btn-search").addEventListener("click", () => {
   fetch(
     `https://openapi.programming-hero.com/api/phones?search=${
@@ -9,6 +10,8 @@ document.getElementById("btn-search").addEventListener("click", () => {
     document.getElementById("mobile-name").value = "";
 });
 
+
+/* display all phone */
 const displayPhone = (phones) => {
   const resultField = document.getElementById("search-result");
   resultField.textContent = "";
@@ -49,12 +52,15 @@ const displayPhone = (phones) => {
 };
 
 
+/* find a single mobile details */
 const moreDetails = details =>{
     fetch(`https://openapi.programming-hero.com/api/phone/${details}`)
     .then(response => response.json())
     .then(data => displayPhoneDetails(data.data))
 }
 
+
+/* display single mobile details */
 const displayPhoneDetails = phoneDetails =>{
   const singlePhone = document.getElementById('phone-info');
   document.getElementById('text_single_phone_details').innerText = 'Single Mobile Phone Details';
