@@ -6,6 +6,7 @@ document.getElementById("btn-search").addEventListener("click", () => {
   )
     .then((response) => response.json())
     .then((data) => displayPhone(data.data));
+    document.getElementById("mobile-name").value = "";
 });
 
 const displayPhone = (phones) => {
@@ -36,5 +37,37 @@ const displayPhone = (phones) => {
 
 
 const moreDetails = details =>{
-    console.log(details);
+    fetch(`https://openapi.programming-hero.com/api/phone/${details}`)
+    .then(response => response.json())
+    .then(data => displayPhoneDetails(data.data))
+}
+
+const displayPhoneDetails = phoneDetails =>{
+  console.log(phoneDetails.image);
+  const singlePhone = document.getElementById('phone-info');
+  const div = document.createElement("div");
+  const others = phoneDetails.others;
+    div.classList.add("col");
+    div.innerHTML =  `
+    <div class="card h-100 border border-success border-3 rounded-3">
+        <img src="${phoneDetails.image}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h3 class="card-title">Phone Name: ${phoneDetails.name}</h3>
+
+          
+          <p5 class="card-title fs-4">Brand Name: <span class="fs-5">${phoneDetails.brand}</span></p5>
+          <h5 class="card-title fs-4">Release Date: <span class="fs-5">${phoneDetails.releaseDate ? phoneDetails.releaseDate : "Release Not Yet"}</span></h5>
+          <h5 class="card-title fs-4">Storage: <span class="fs-5">${phoneDetails.mainFeatures.storage}</span></h5>
+          <h5 class="card-title fs-4">ChipSe: <span class="fs-5">${phoneDetails.mainFeatures.chipSet ? phoneDetails.mainFeatures.chipSet : "Not Available"}</span></h5>
+          <h5 class="card-title fs-4">DisplaySize: <span class="fs-5">${phoneDetails.mainFeatures.displaySize}</span></h5>
+          
+          <h5 class="card-title fs-4">MainFeatures: <span class="fs-5">${phoneDetails.mainFeatures.memory}</span></h5>
+          <h6 class="card-text">
+            Sensor: ${phoneDetails.mainFeatures.sensors ? phoneDetails.mainFeatures.sensors : "Not Available"}
+          </h6>
+          <h6> Other: <span class="fs-5"></span></h6>
+        </div>
+      </div>`;
+    singlePhone.appendChild(div);
+
 }
